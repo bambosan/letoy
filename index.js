@@ -3,7 +3,7 @@ import qrcode from 'qrcode-terminal';
 import { Boom } from '@hapi/boom';
 import { Configuration, OpenAIApi } from "openai";
 
-const config = new Configuration({ apiKey: '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' });
+const config = new Configuration({ apiKey: process.env });
 const openai = new OpenAIApi(config);
 
 (async function () {
