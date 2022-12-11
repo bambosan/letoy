@@ -1,11 +1,10 @@
 {
-  "name": "aibot",
+  "name": "letoy",
   "version": "1.0.0",
   "description": "bot whatsapp with OpenAI integrations",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js"
+    "start": "node index.js"
   },
   "author": "bambosan",
   "license": "MIT",
