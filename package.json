@@ -1,7 +1,7 @@
 {
   "name": "letoy",
   "version": "1.0.0",
-  "description": "bot whatsapp with OpenAI integrations",
+  "description": "Whatsapp bot with OpenAI integrations",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
