@@ -23,7 +23,6 @@ export async function textc(socket, messages){
                 { quoted: messages[0] }
             );
         }
-
     } catch (error) {
         if (error.response) {
             await socket.sendMessage(messages[0].key.remoteJid,
@@ -48,7 +47,6 @@ export async function dalle(socket, messages){
             { image: { url: dalle.data.data[0].url } },
             { quoted: messages[0] }
         );
-
     } catch (error) {
         if (error.response) {
             await socket.sendMessage(messages[0].key.remoteJid,

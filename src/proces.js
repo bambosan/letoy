@@ -1,9 +1,8 @@
 import { downloadMediaMessage } from '@adiwajshing/baileys';
 import { downloadContentFromMessage } from '@adiwajshing/baileys/lib/Utils/messages-media.js';
 import { dalle, textc } from './openai.js';
-import stickers from './sticker.js';
+import { imageSticker, videoSticker } from './sticker.js';
 import { Buffer } from 'node:buffer';
-import * as fs from 'fs';
 
 const letoyHelp = `letoy <arg>
 
@@ -50,34 +49,34 @@ export default async function msgUpsert(socket) {
             
             if (messages[0].message.imageMessage && messages[0].message.imageMessage.caption.match(/^letoy(?= stiker)/i)) {
                 downloadMediaMessage(messages[0], 'buffer', {}, {}).then(async (buffer) => {
-                    stickers(socket, messages, buffer, 'image');
+                    imageSticker(socket, messages, buffer, false);
                 });
             }
 
             if (messages[0].message.videoMessage && messages[0].message.videoMessage.caption.match(/^letoy(?= stiker)/i)) {
                 downloadMediaMessage(messages[0], 'buffer', {}, {}).then((buffer) => {
-                    stickers(socket, messages, buffer, 'video');
+                    videoSticker(socket, messages, buffer, false);
                 });
             }
             
             if (messages[0].message.extendedTextMessage && messages[0].message.extendedTextMessage.text.match(/^letoy(?= stiker)/i)) {
                 if(messages[0].message.extendedTextMessage.contextInfo.quotedMessage.imageMessage){
-                    const imgStream = await downloadContentFromMessage(messages[0].message.extendedTextMessage.contextInfo.quotedMessage.imageMessage, 'image');
+                    const imageStream = await downloadContentFromMessage(messages[0].message.extendedTextMessage.contextInfo.quotedMessage.imageMessage, 'image');
 
                     const data = [];
-                    imgStream.on('data', (chunk) => data.push(chunk));
-                    imgStream.on('end', () => {
-                        stickers(socket, messages, Buffer.concat(data), 'extimg');
+                    imageStream.on('data', (chunk) => data.push(chunk));
+                    imageStream.on('end', () => {
+                        imageSticker(socket, messages, Buffer.concat(data), true);
                     });
                 }
 
                 if(messages[0].message.extendedTextMessage.contextInfo.quotedMessage.videoMessage){
-                    const imgDat = await downloadContentFromMessage(messages[0].message.extendedTextMessage.contextInfo.quotedMessage.videoMessage, 'video');
+                    const videoStream = await downloadContentFromMessage(messages[0].message.extendedTextMessage.contextInfo.quotedMessage.videoMessage, 'video');
 
                     const data = [];
-                    imgDat.on('data', (chunk) => data.push(chunk));
-                    imgDat.on('end', () => {
-                        stickers(socket, messages, Buffer.concat(data), 'extvid');
+                    videoStream.on('data', (chunk) => data.push(chunk));
+                    videoStream.on('end', () => {
+                        videoSticker(socket, messages, Buffer.concat(data), true);
                     });
                 }
             }
