@@ -40,22 +40,22 @@ export default async function msgUpsert(socket) {
             }
             
             if (messages[0].message.conversation.match(/^letoy(?= jawab \w)/i)) {
-                textc(socket, messages);
+                await textc(socket, messages);
             }
 
             if (messages[0].message.conversation.match(/^letoy(?= dalle \w)/i)) {
-                dalle(socket, messages);
+                await dalle(socket, messages);
             }
             
             if (messages[0].message.imageMessage && messages[0].message.imageMessage.caption.match(/^letoy(?= stiker)/i)) {
                 downloadMediaMessage(messages[0], 'buffer', {}, {}).then(async (buffer) => {
-                    imageSticker(socket, messages, buffer, false);
+                    await imageSticker(socket, messages, buffer, false);
                 });
             }
 
             if (messages[0].message.videoMessage && messages[0].message.videoMessage.caption.match(/^letoy(?= stiker)/i)) {
-                downloadMediaMessage(messages[0], 'buffer', {}, {}).then((buffer) => {
-                    videoSticker(socket, messages, buffer, false);
+                downloadMediaMessage(messages[0], 'buffer', {}, {}).then(async (buffer) => {
+                    await videoSticker(socket, messages, buffer, false);
                 });
             }
             
@@ -65,8 +65,8 @@ export default async function msgUpsert(socket) {
 
                     const data = [];
                     imageStream.on('data', (chunk) => data.push(chunk));
-                    imageStream.on('end', () => {
-                        imageSticker(socket, messages, Buffer.concat(data), true);
+                    imageStream.on('end', async () => {
+                        await imageSticker(socket, messages, Buffer.concat(data), true);
                     });
                 }
 
@@ -75,8 +75,8 @@ export default async function msgUpsert(socket) {
 
                     const data = [];
                     videoStream.on('data', (chunk) => data.push(chunk));
-                    videoStream.on('end', () => {
-                        videoSticker(socket, messages, Buffer.concat(data), true);
+                    videoStream.on('end', async () => {
+                        await videoSticker(socket, messages, Buffer.concat(data), true);
                     });
                 }
             }
