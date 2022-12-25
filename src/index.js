@@ -12,7 +12,7 @@ async function waConnect() {
         if (cs.connection === 'close') {
             if (new Boom(cs.lastDisconnect.error).output.statusCode !== DisconnectReason.loggedOut) {
                 waConnect();
-                console.log('connection closed must login');
+                console.log('connection closed, must login');
             }
             console.log('connection closed');
         } else if (cs.connection === 'open') {
@@ -23,6 +23,10 @@ async function waConnect() {
 }
 
 waConnect().then(async (socket) => {
+    // socket.ev.on('messages.upsert', ({ messages }) => {
+    //     messages[0].message.extendedTextMessage.contextInfo.quotedMessage.imageMessage
+
+    // });
     await msgUpsert(socket);
 })
 
