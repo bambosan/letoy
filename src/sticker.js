@@ -1,9 +1,10 @@
 import { Sticker, StickerTypes } from 'wa-sticker-formatter/dist/index.js';
 
 export default async function stickers(socket, messages, buffers, isImgMsg) {
-    const arg = isImgMsg ? messages[0].message.imageMessage.caption.slice(3) : messages[0].message.extendedTextMessage.text.slice(3);
+    const arg = isImgMsg ? messages[0].message.imageMessage.caption.slice(14).trim() : messages[0].message.extendedTextMessage.text.slice(14).trim();
+
     const sticketConfig = {
-        pack: arg || 'my sticker',
+        pack: arg || 'My Sticker',
         author: messages[0].pushName,
         type: StickerTypes.DEFAULT,
         categories: [],

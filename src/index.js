@@ -23,10 +23,6 @@ async function waConnect() {
 }
 
 waConnect().then(async (socket) => {
-    // socket.ev.on('messages.upsert', ({ messages }) => {
-    //     messages[0].message.extendedTextMessage.contextInfo.quotedMessage.imageMessage
-
-    // });
     await msgUpsert(socket);
 })
 
