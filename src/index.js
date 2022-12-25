@@ -19,10 +19,8 @@ async function waConnect() {
             console.log('connection open');
         }
     });
-    return socket;
+    await msgUpsert(socket);
 }
 
-waConnect().then(async (socket) => {
-    await msgUpsert(socket);
-})
+waConnect();
 
