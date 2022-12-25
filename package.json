@@ -11,6 +11,7 @@
   "dependencies": {
     "@adiwajshing/baileys": "^4.4.0",
     "@hapi/boom": "^10.0.0",
+    "compile-run": "^2.3.4",
     "dotenv": "^16.0.3",
     "jimp": "^0.16.2",
     "link-preview-js": "^2.1.19",

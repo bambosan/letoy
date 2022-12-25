@@ -1,8 +1,10 @@
 import { downloadMediaMessage } from '@adiwajshing/baileys';
 import { downloadContentFromMessage } from '@adiwajshing/baileys/lib/Utils/messages-media.js';
+import { Buffer } from 'node:buffer';
+
 import { dalle, textc } from './openai.js';
 import { imageSticker, videoSticker } from './sticker.js';
-import { Buffer } from 'node:buffer';
+import { cppExec, cExec, pythonExec } from './compile.js';
 
 const letoyHelp = `letoy <arg>
 
@@ -46,7 +48,19 @@ export default async function msgUpsert(socket) {
             if (messages[0].message.conversation.match(/^letoy(?= dalle \w)/i)) {
                 await dalle(socket, messages);
             }
+
+            if (messages[0].message.conversation.match(/^letoy(?= g\+\+)/i)) {
+                cppExec(socket, messages);
+            }
+
+            if (messages[0].message.conversation.match(/^letoy(?= gcc)/i)) {
+                cExec(socket, messages);
+            }
             
+            if (messages[0].message.conversation.match(/^letoy(?= python)/i)) {
+                pythonExec(socket, messages);
+            }
+
             if (messages[0].message.imageMessage && messages[0].message.imageMessage.caption.match(/^letoy(?= stiker)/i)) {
                 downloadMediaMessage(messages[0], 'buffer', {}, {}).then(async (buffer) => {
                     await imageSticker(socket, messages, buffer, false);
