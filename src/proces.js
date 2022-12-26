@@ -33,7 +33,7 @@ export default async function msgUpsert(socket) {
                     { quoted: messages[0] }
                 );
             }
-
+            
             if(messages[0].message.conversation.match(/^letoy(?= stiker help)/i)){
                 await socket.sendMessage(messages[0].key.remoteJid,
                     { text: stikerHelp },
