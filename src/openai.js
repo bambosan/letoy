@@ -9,7 +9,7 @@ export async function textc(socket, messages){
     try {
         const completions = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: messages[0].message.conversation.slice(6).trim(),
+            prompt: messages[0].message.conversation.slice(3).trim(),
             temperature: 0,
             max_tokens: 3500,
             top_p: 1,
@@ -38,7 +38,7 @@ export async function textc(socket, messages){
 export async function dalle(socket, messages){
     try {
         const dalle = await openai.createImage({
-            prompt: messages[0].message.conversation.slice(12).trim(),
+            prompt: messages[0].message.conversation.slice(3).trim(),
             n: 1,
             size: '512x512'
         });

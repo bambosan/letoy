@@ -1,24 +1,24 @@
 import { Sticker, StickerTypes } from 'wa-sticker-formatter/dist/index.js';
 
 function selectType(sticketConfig, arg=''){
-    if (arg.match(/^default/)) {
-        sticketConfig.pack = arg.slice(5) || 'my sticker';
+    if (arg.match(/^def/)) {
+        sticketConfig.pack = arg.slice(3) || 'my sticker';
         sticketConfig.type = StickerTypes.DEFAULT;
     }
 
-    if (arg.match(/^circle/)) {
-        sticketConfig.pack = arg.slice(7) || 'my sticker';
+    if (arg.match(/^cir/)) {
+        sticketConfig.pack = arg.slice(3) || 'my sticker';
         sticketConfig.type = StickerTypes.CIRCLE;
     }
 
-    if (arg.match(/^cropped/)) {
-        sticketConfig.pack = arg.slice(8) || 'my sticker';
+    if (arg.match(/^crop/)) {
+        sticketConfig.pack = arg.slice(4) || 'my sticker';
         sticketConfig.type = StickerTypes.CROPPED;
     }
 }
 
 export async function imageSticker(socket, messages, data, isExtMsg) {
-    let arg = isExtMsg ? messages[0].message.extendedTextMessage.text.slice(13).trim() : messages[0].message.imageMessage.caption.slice(13).trim();
+    let arg = isExtMsg ? messages[0].message.extendedTextMessage.text.slice(3).trim() : messages[0].message.imageMessage.caption.slice(3).trim();
     const sticketConfig = {
         pack: arg || 'My Sticker',
         author: messages[0].pushName,
@@ -39,7 +39,7 @@ export async function imageSticker(socket, messages, data, isExtMsg) {
 }
 
 export async function videoSticker(socket, messages, data, isExtMsg){
-    const arg = isExtMsg ? messages[0].message.extendedTextMessage.text.slice(13).trim() : messages[0].message.videoMessage.caption.slice(13).trim();
+    const arg = isExtMsg ? messages[0].message.extendedTextMessage.text.slice(3).trim() : messages[0].message.videoMessage.caption.slice(3).trim();
     const sticketConfig = {
         pack: arg || 'My Sticker',
         author: messages[0].pushName,
